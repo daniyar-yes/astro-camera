@@ -5,6 +5,7 @@ import {
   StyleSheet,
   PermissionsAndroid,
   Platform,
+  Image,
 } from 'react-native';
 
 const App = () => {
@@ -38,11 +39,19 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <RNCamera
-        style={styles.preview}
-        type={RNCamera.Constants.Type.back}
-        captureAudio={false}
-      />
+      {Platform.OS === 'ios' && !__DEV__ ? (
+        <RNCamera
+          style={{flex: 1}}
+          type={RNCamera.Constants.Type.back}
+          captureAudio={false} // Disable audio
+        />
+      ) : (
+        <Image
+          style={{flex: 1}}
+          source={{uri: 'https://via.placeholder.com/450'}} // Placeholder image URL
+          resizeMode="cover"
+        />
+      )}
     </SafeAreaView>
   );
 };
